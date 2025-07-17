@@ -5,9 +5,7 @@ import { PrivateSalaryComparisonContract } from "./types/contract";
 import "./App.css";
 
 // Import the full contract ABI from deployment
-import contractAbi from "../deployments/sepolia/PrivateSalaryComparison.json";
-const CONTRACT_ABI = contractAbi.abi;
-const CONTRACT_ADDRESS = "0xb823F60D53bc9a3F3c9A6CF56F902550f8F9297a"; // Final deployed contract address
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from "./contractInfo";
 
 declare global {
   interface Window {

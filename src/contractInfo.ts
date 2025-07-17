@@ -1,0 +1,151 @@
+export const CONTRACT_ADDRESS = "0xb823F60D53bc9a3F3c9A6CF56F902550f8F9297a";
+export const CONTRACT_ABI = [
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: "string", name: "role", type: "string" },
+      { indexed: false, internalType: "uint256", name: "requestId", type: "uint256" },
+      { indexed: false, internalType: "uint32", name: "decryptedAverage", type: "uint32" },
+    ],
+    name: "AverageDecrypted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: "string", name: "role", type: "string" },
+      { indexed: false, internalType: "uint256", name: "count", type: "uint256" },
+    ],
+    name: "DebugMinMax",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: "string", name: "role", type: "string" },
+      { indexed: false, internalType: "bytes32", name: "ciphertext", type: "bytes32" },
+    ],
+    name: "DebugSum",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      { indexed: false, internalType: "uint256", name: "timestamp", type: "uint256" },
+    ],
+    name: "SalaryRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      { indexed: false, internalType: "string", name: "role", type: "string" },
+      { indexed: false, internalType: "string", name: "experience", type: "string" },
+      { indexed: false, internalType: "uint256", name: "timestamp", type: "uint256" },
+    ],
+    name: "SalarySubmitted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      { indexed: false, internalType: "string", name: "role", type: "string" },
+      { indexed: false, internalType: "string", name: "experience", type: "string" },
+      { indexed: false, internalType: "uint256", name: "timestamp", type: "uint256" },
+    ],
+    name: "SalaryUpdated",
+    type: "event",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "activeEntries",
+    outputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "string", name: "role", type: "string" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "", type: "string" }],
+    name: "decryptedAverages",
+    outputs: [{ internalType: "uint32", name: "", type: "uint32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "role", type: "string" }],
+    name: "getRoleStats",
+    outputs: [
+      { internalType: "euint32", name: "sumSalary", type: "bytes32" },
+      { internalType: "euint32", name: "minSalary", type: "bytes32" },
+      { internalType: "euint32", name: "maxSalary", type: "bytes32" },
+      { internalType: "uint256", name: "totalEntries", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getTotalEntries",
+    outputs: [{ internalType: "uint256", name: "total", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "getUserRoles",
+    outputs: [{ internalType: "string[]", name: "", type: "string[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "string", name: "role", type: "string" },
+    ],
+    name: "hasActiveEntry",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "string", name: "role", type: "string" },
+    ],
+    name: "isDecryptionPending",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "role", type: "string" }],
+    name: "recalculateMinMax",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "externalEuint32", name: "encryptedSalary", type: "bytes32" },
+      { internalType: "bytes", name: "inputProof", type: "bytes" },
+      { internalType: "string", name: "role", type: "string" },
+      { internalType: "string", name: "experience", type: "string" },
+    ],
+    name: "submitSalary",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "role", type: "string" }],
+    name: "removeSalary",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
