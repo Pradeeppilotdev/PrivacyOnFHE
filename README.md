@@ -43,35 +43,6 @@ This dApp solves a real privacy problem: **salary transparency without compromis
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 🚀 Improvements Inspired by CoinSweeper
-
-This project incorporates best practices from the [CoinSweeper repository](https://github.com/liolikus/coinsweeper), a
-successful Zama FHE dApp:
-
-### ✅ Enhanced CLI Tools
-
-- **Comprehensive Task System**: Full CLI interaction with the contract
-- **Testing Utilities**: Easy contract testing and debugging
-- **User-Friendly Commands**: Simple commands for complex operations
-
-### ✅ Better FHE Configuration
-
-- **Proper ZamaConfig**: Dedicated configuration for Sepolia network
-- **SepoliaConfig Inheritance**: Clean contract structure
-- **Oracle Integration**: Proper decryption oracle setup
-
-### ✅ Improved Error Handling
-
-- **Robust Error Messages**: Clear error feedback
-- **Input Validation**: Comprehensive validation patterns
-- **Graceful Failures**: Better user experience
-
-### ✅ Enhanced Documentation
-
-- **CLI Tutorial**: Step-by-step interaction guide
-- **Best Practices**: Industry-standard patterns
-- **Comprehensive Examples**: Real-world usage scenarios
-
 ## 📋 Prerequisites
 
 - Node.js >= 20
@@ -143,10 +114,13 @@ function submitSalary(
 
 // Get role statistics (encrypted)
 function getRoleStats(string calldata role)
-    external view returns (euint32, euint32, euint32, uint256)
+    external view returns (euint32 sumSalary, euint32 minSalary, euint32 maxSalary, uint256 totalEntries)
+
+// Recalculate min/max for a role (must be called after salary changes)
+function recalculateMinMax(string calldata role) external
 
 // Check if user has entry
-function hasActiveEntry(address user) external view returns (bool)
+function hasActiveEntry(address user, string calldata role) external view returns (bool)
 ```
 
 ## 🎯 How FHE Works in This dApp
@@ -304,7 +278,9 @@ npm run preview
 
 - Enter a job role to check
 - Click "Get Role Statistics"
-- View encrypted statistics (average, min, max)
+- View encrypted statistics (sum, min, max, total entries)
+- **Note:** Min/Max values are updated by calling `recalculateMinMax`. The frontend automatically calls this after each
+  salary submission, and also provides a manual "Recalculate Min/Max" button for users.
 
 ### 4. **Privacy Verification**
 
