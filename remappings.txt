@@ -1,0 +1,2 @@
+@fhevm/solidity/config=./fhevmTemp/@fhevm/solidity/config
+@zama-fhe/oracle-solidity/address=./fhevmTemp/@zama-fhe/oracle-solidity/address 

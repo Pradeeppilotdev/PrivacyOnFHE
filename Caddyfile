@@ -1,0 +1,12 @@
+{
+  admin 127.0.0.1:2020
+}
+
+:3001
+
+reverse_proxy localhost:3000
+
+header {
+  Cross-Origin-Opener-Policy "same-origin"
+  Cross-Origin-Embedder-Policy "require-corp"
+}
