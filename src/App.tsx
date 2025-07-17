@@ -572,7 +572,7 @@ function App() {
                       </option>
                     ))}
                   </select>
-                  <button type="button" onClick={handleNewRoleClick} style={{ marginLeft: 8 }} disabled={loading}>
+                  <button type="button" onClick={handleNewRoleClick} className="new-role-btn" disabled={loading}>
                     New Role
                   </button>
                 </>

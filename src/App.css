@@ -789,3 +789,9 @@ body {
   letter-spacing: 2px;
   text-shadow: 0 0 12px #00ff41;
 }
+
+/* Add spacing below the New Role button */
+.form-group .new-role-btn {
+  margin-top: 12px;
+  display: block;
+}
