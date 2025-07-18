@@ -118,15 +118,18 @@ contract PrivateSalaryComparison is SepoliaConfig {
         if (isRemove) {
             if (stats.totalEntries > 0) {
                 stats.sumSalary = FHE.sub(stats.sumSalary, oldSalary);
+                FHE.allowThis(stats.sumSalary);
                 stats.totalEntries--;
             }
         } else if (isUpdate) {
             stats.sumSalary = FHE.add(FHE.sub(stats.sumSalary, oldSalary), newSalary);
+            FHE.allowThis(stats.sumSalary);
         } else {
             if (stats.totalEntries == 0) {
                 stats.sumSalary = newSalary;
             } else {
                 stats.sumSalary = FHE.add(stats.sumSalary, newSalary);
+                FHE.allowThis(stats.sumSalary);
             }
             stats.totalEntries++;
         }

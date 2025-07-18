@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0xb823F60D53bc9a3F3c9A6CF56F902550f8F9297a";
+export const CONTRACT_ADDRESS = "0x116cE34B5255588260c2A79168849C7091658C03";
 export const CONTRACT_ABI = [
   {
     anonymous: false,
@@ -114,11 +114,32 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [
-      { internalType: "address", name: "user", type: "address" },
-      { internalType: "string", name: "role", type: "string" },
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "string", name: "", type: "string" },
     ],
     name: "isDecryptionPending",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "", type: "string" }],
+    name: "lastPublicMaxHash",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "", type: "string" }],
+    name: "lastPublicMinHash",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "", type: "string" }],
+    name: "lastPublicSumHash",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
     stateMutability: "view",
     type: "function",
   },
@@ -127,6 +148,40 @@ export const CONTRACT_ABI = [
     name: "recalculateMinMax",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "role", type: "string" }],
+    name: "removeSalary",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "requestIdToRole",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "requestIdToUser",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "", type: "string" }],
+    name: "roleStats",
+    outputs: [
+      { internalType: "euint32", name: "averageSalary", type: "bytes32" },
+      { internalType: "euint32", name: "minSalary", type: "bytes32" },
+      { internalType: "euint32", name: "maxSalary", type: "bytes32" },
+      { internalType: "euint32", name: "sumSalary", type: "bytes32" },
+      { internalType: "uint256", name: "totalEntries", type: "uint256" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -142,10 +197,19 @@ export const CONTRACT_ABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "role", type: "string" }],
-    name: "removeSalary",
-    outputs: [],
-    stateMutability: "nonpayable",
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "string", name: "", type: "string" },
+    ],
+    name: "userSalaries",
+    outputs: [
+      { internalType: "euint32", name: "encryptedSalary", type: "bytes32" },
+      { internalType: "string", name: "role", type: "string" },
+      { internalType: "string", name: "experience", type: "string" },
+      { internalType: "uint256", name: "timestamp", type: "uint256" },
+      { internalType: "bool", name: "isActive", type: "bool" },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];

@@ -34,6 +34,8 @@ function App() {
   const [message, setMessage] = useState<string>("");
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const [messageType, setMessageType] = useState<"success" | "error">("success");
+  const [showHowToModal, setShowHowToModal] = useState<boolean>(false);
+  const [showNextSteps, setShowNextSteps] = useState<boolean>(false);
 
   // Remove relayer initialization from startup - it's not needed for basic operations
   // Relayer will be initialized when needed for user decryption
@@ -49,6 +51,19 @@ function App() {
     };
     void checkAndInit();
   }, []);
+
+  // Show the modal only once per user using localStorage
+  useEffect(() => {
+    const seen = localStorage.getItem("howToUseSeen");
+    if (!seen) {
+      setShowHowToModal(true);
+    }
+  }, []);
+
+  const handleCloseHowToModal = () => {
+    setShowHowToModal(false);
+    localStorage.setItem("howToUseSeen", "1");
+  };
 
   // Connect wallet
   const connectWallet = async () => {
@@ -197,6 +212,9 @@ function App() {
       );
       await tx.wait();
 
+      // Show next steps message after successful submission
+      setShowNextSteps(true);
+
       // setMessage("Salary submitted successfully!");
       setHasEntry(true);
       setTotalEntries((prev) => prev + 1);
@@ -215,13 +233,13 @@ function App() {
         }
       }
       showUserMessage("Your encrypted salary was submitted successfully!", "success");
-      try {
-        const signer = await provider?.getSigner();
-        const contractWithSigner = contract.connect(signer!);
-        await (contractWithSigner as any).recalculateMinMax(roleToUse);
-      } catch (error) {
-        console.warn("Optional min/max recompute failed:", error);
-      }
+      // try {
+      //   const signer = await provider?.getSigner();
+      //   const contractWithSigner = contract.connect(signer!);
+      //   await (contractWithSigner as any).recalculateMinMax(roleToUse);
+      // } catch (error) {
+      //   console.warn("Optional min/max recompute failed:", error);
+      // }
     } catch (error: unknown) {
       console.error("Error submitting salary:", error);
       console.error("Full error object:", error);
@@ -465,8 +483,57 @@ function App() {
     return JSON.stringify(obj, (key, value) => (typeof value === "bigint" ? value.toString() : value), 2);
   }
 
+  // Hide next steps message when user clicks recalculate or get stats
+  const handleRecomputeMinMax = async () => {
+    setShowNextSteps(false);
+    await recomputeMinMax();
+  };
+  const handleGetRoleStats = async () => {
+    setShowNextSteps(false);
+    await getRoleStats();
+  };
+
   return (
     <div className="App">
+      {/* Modal Popup for How to Use */}
+      {showHowToModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>How to Use</h2>
+            <ol style={{ textAlign: "left", margin: "20px 0" }}>
+              <li>Connect your wallet.</li>
+              <li>Enter your salary details.</li>
+              <li>
+                Click <b>Submit Salary</b>.
+              </li>
+              <li>
+                Click <b>Recalculate Min/Max</b>.
+              </li>
+              <li>
+                Click <b>Get Statistics</b> to view your role stats.
+              </li>
+            </ol>
+            <p style={{ fontSize: 14, color: "#00ff41", marginBottom: 16 }}>
+              <b>Tip:</b> After each new salary submission, repeat steps 4 and 5 to update your statistics.
+            </p>
+            <button
+              style={{
+                padding: "10px 24px",
+                borderRadius: 8,
+                background: "#00ff41",
+                color: "#111",
+                fontWeight: 700,
+                border: "none",
+                fontSize: 16,
+                cursor: "pointer",
+              }}
+              onClick={handleCloseHowToModal}
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
       {/* Spacious, non-overlapping ZAMA watermarks */}
       {[
         { top: "8%", left: "7%", fontSize: "2.5vw", rotate: "-18deg", opacity: 0.09 }, // top left
@@ -616,7 +683,7 @@ function App() {
                   )}
                 </button>
               )}
-              <button onClick={getRoleStats} disabled={loading || !selectedRole} className="stats-btn">
+              <button onClick={handleGetRoleStats} disabled={loading || !selectedRole} className="stats-btn">
                 {loading ? (
                   <>
                     <span className="loading"></span> ANALYZING...
@@ -626,7 +693,7 @@ function App() {
                 )}
               </button>
               <button
-                onClick={recomputeMinMax}
+                onClick={handleRecomputeMinMax}
                 disabled={loading || !selectedRole}
                 className="stats-btn"
                 style={{
@@ -658,6 +725,29 @@ function App() {
                   }}
                 >
                   {message}
+                </div>
+              )}
+              {/* Show next steps after salary submission */}
+              {showNextSteps && !showMessage && (
+                <div
+                  style={{
+                    background: "#111",
+                    color: "#00ff41",
+                    padding: "10px 18px",
+                    borderRadius: 8,
+                    fontSize: 15,
+                    border: "1px solid #00ff41",
+                    margin: "0 auto",
+                    maxWidth: 400,
+                    marginTop: 8,
+                    textAlign: "center",
+                  }}
+                >
+                  <b>Next steps:</b> <br />
+                  Enter your Job Role
+                  <br />
+                  Click <b>Recalculate Min/Max</b> <br />
+                  Click <b>Get Statistics</b> to see your updated stats.
                 </div>
               )}
             </div>
@@ -744,6 +834,26 @@ function App() {
               <li>Statistical insights without data exposure</li>
               <li>Quantum-resistant encryption algorithms</li>
             </ul>
+          </div>
+          {/* How to Use instructions always visible, styled like info-section */}
+          <div className="info-section">
+            <h3>HOW TO USE</h3>
+            <ul style={{ color: "#fff", marginBottom: 10, paddingLeft: 22, fontSize: "1.08rem", lineHeight: 1.7 }}>
+              <li>Connect your wallet.</li>
+              <li>Enter your salary details.</li>
+              <li>
+                Click <b>Submit Salary</b>.
+              </li>
+              <li>
+                Click <b>Recalculate Min/Max</b>.
+              </li>
+              <li>
+                Click <b>Get Statistics</b> to view your role stats.
+              </li>
+            </ul>
+            <div style={{ color: "#00ff41", fontSize: 13, marginTop: 6, textAlign: "center" }}>
+              <b>Tip:</b> After each new salary submission, repeat steps 4 and 5 to update your statistics.
+            </div>
           </div>
           <div className="contract-info">
             <h3>SMART CONTRACT DATA</h3>
