@@ -359,6 +359,7 @@ body {
   font-size: 1rem;
   color: var(--text-green);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .form-group input::placeholder {

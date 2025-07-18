@@ -825,6 +825,29 @@ function App() {
 
         {/* Right Panel - Info & Stats */}
         <div className="right-panel">
+          {/* Sepolia Faucet Button */}
+          <a
+            href="https://cloud.google.com/application/web3/faucet/ethereum/sepolia"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "block",
+              background: "#00ff41",
+              color: "#181818",
+              fontWeight: 700,
+              textAlign: "center",
+              padding: "12px 0",
+              borderRadius: 10,
+              margin: "0 0 18px 0",
+              fontSize: "1.08rem",
+              letterSpacing: 1,
+              textDecoration: "none",
+              boxShadow: "0 2px 8px 0 rgba(0,255,65,0.12)",
+              border: "2px solid #00ff41",
+            }}
+          >
+            Sepolia ETH Faucet
+          </a>
           <div className="info-section">
             <h3>FHE PRIVACY PROTECTION</h3>
             <ul>
