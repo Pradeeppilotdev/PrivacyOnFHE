@@ -114,16 +114,64 @@ function submitSalary(
     string calldata experience
 ) external
 
-// Get role statistics (encrypted)
+// Remove salary entry for a role
+function removeSalary(string calldata role) external
+
+// Get encrypted statistics for a role
 function getRoleStats(string calldata role)
     external view returns (euint32 sumSalary, euint32 minSalary, euint32 maxSalary, uint256 totalEntries)
 
-// Recalculate min/max for a role (must be called after salary changes)
+// Recalculate and make min/max publicly decryptable for a role
 function recalculateMinMax(string calldata role) external
 
-// Check if user has entry
+// Check if a user has an active entry for a role
 function hasActiveEntry(address user, string calldata role) external view returns (bool)
 ```
+
+---
+
+## 🔑 Main Smart Contract Functionality
+
+The `PrivateSalaryComparison` contract enables privacy-preserving salary analytics using Fully Homomorphic Encryption
+(FHE) on-chain. Here are the core features and logic:
+
+- **Encrypted Salary Submission:**  
+  Users submit their salary (encrypted with FHE) along with their job role and experience. The contract stores this
+  encrypted data and updates role-based statistics.
+
+- **Role-Based Encrypted Statistics:**  
+  For each role, the contract maintains encrypted statistics:
+
+  - **Sum** of all submitted salaries (encrypted)
+  - **Min** and **Max** salary (encrypted, updated via `recalculateMinMax`)
+  - **Total number of entries** for the role
+
+- **Privacy-Preserving Computation:**  
+  All arithmetic (sum, min, max) is performed directly on encrypted data using FHEVM. No individual salary is ever
+  decrypted or exposed on-chain.
+
+- **Public Decryption of Aggregates:**  
+  Only the aggregated statistics (sum, min, max) are made publicly decryptable. The average is computed in the frontend
+  after decrypting the sum and reading the count.
+
+- **Manual Min/Max Update:**  
+  To avoid expensive computation on every salary change, min and max are updated only when `recalculateMinMax(role)` is
+  called (either by the user or the frontend).
+
+- **User Experience:**
+  - Users can submit, update, or remove their salary entry for a given role.
+  - After each salary submission or removal, users (or the frontend) should call `recalculateMinMax` for their role to
+    update public stats.
+  - Anyone can view encrypted statistics and request public decryption for aggregate values.
+
+### Privacy Model
+
+- **No individual salary is ever decrypted on-chain.**
+- **All computations are performed on encrypted data.**
+- **Only aggregate statistics (sum, min, max) are made public for decryption.**
+- **Average is computed in the frontend after decryption.**
+
+---
 
 ## 🎯 How FHE Works in This dApp
 
