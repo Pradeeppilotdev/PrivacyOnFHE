@@ -4,6 +4,8 @@ A complete decentralized application (dApp) that demonstrates **Fully Homomorphi
 comparison. Users can submit their encrypted salaries and get comparison statistics without revealing their actual
 amounts.
 
+dApp link - ( https://quantumpay-gamma.vercel.app/ )
+
 ## 🌟 Real-World Use Case
 
 This dApp solves a real privacy problem: **salary transparency without compromising individual privacy**. Users can:
@@ -55,7 +57,7 @@ This dApp solves a real privacy problem: **salary transparency without compromis
 ### 1. Clone and Install
 
 ```bash
-git clone <your-repo>
+git clone https://github.com/Pradeeppilotdev/PrivacyOnFHE
 cd fhevmcontract
 npm install
 ```
@@ -97,9 +99,9 @@ The dApp will be available at `http://localhost:3000`
 
 ### Deployed Contracts
 
-- **PrivateSalaryComparison**: `0x61B2a99d13482B202f7B7f5A0a25A2BC7e1976B3`
+- **PrivateSalaryComparison**: `0x116cE34B5255588260c2A79168849C7091658C03`
 - **Network**: Sepolia Testnet
-- **Etherscan**: [View Contract](https://sepolia.etherscan.io/address/0x61B2a99d13482B202f7B7f5A0a25A2BC7e1976B3)
+- **Etherscan**: [View Contract](https://sepolia.etherscan.io/address/0x116cE34B5255588260c2A79168849C7091658C03)
 
 ### Key Functions
 
